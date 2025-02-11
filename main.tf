@@ -97,6 +97,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   tags = {
     Environment = "Development"
   }
+  }
 }
 
 # Extensión de VM para ejecutar los scripts .sh
