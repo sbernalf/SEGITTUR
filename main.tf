@@ -84,6 +84,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     storage_account_type = "Premium_LRS"
     disk_size_gb         = 30
   }
+  disable_password_authentication = true
 
   identity {
     type = "SystemAssigned"
