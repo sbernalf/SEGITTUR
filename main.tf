@@ -18,6 +18,7 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
+# IP pública
 resource "azurerm_public_ip" "vm_public_ip" {
   name                = "myPublicIP"
   location            = azurerm_resource_group.rg.location
@@ -25,7 +26,7 @@ resource "azurerm_public_ip" "vm_public_ip" {
   allocation_method   = "Dynamic"
 }
 
-# Red virtual
+# Red Virtual
 resource "azurerm_virtual_network" "vnet" {
   name                = "vnet-standard"
   location            = azurerm_resource_group.rg.location
@@ -41,7 +42,7 @@ resource "azurerm_subnet" "subnet" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
-# Interfaz de red
+# Interfaz de Red
 resource "azurerm_network_interface" "nic" {
   name                = "nic-vm"
   location            = azurerm_resource_group.rg.location
@@ -49,21 +50,21 @@ resource "azurerm_network_interface" "nic" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.id
+    subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
 
     public_ip_address {
       id = azurerm_public_ip.vm_public_ip.id
+    }
   }
 }
 
-# Máquina Virtual con Red Hat y autenticación Entra ID
+# VM con Red Hat y autenticación SSH
 resource "azurerm_linux_virtual_machine" "vm" {
   name                = var.vm_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  admin_username = var.admin_username
-  admin_password = "TSEIberia*2025"
+  admin_username      = var.admin_username
   size                = var.vm_size
   network_interface_ids = [azurerm_network_interface.nic.id]
 
@@ -78,7 +79,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Premium_LRS"
-    disk_size_gb      = 30
+    disk_size_gb         = 30
   }
 
   admin_ssh_key {
@@ -97,7 +98,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
   tags = {
     Environment = "Development"
   }
-  }
 }
 
 # Extensión de VM para ejecutar los scripts .sh
@@ -115,4 +115,3 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
     }
 SETTINGS
 }
-
