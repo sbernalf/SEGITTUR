@@ -1,13 +1,13 @@
 variable "resource_group_name" {
   description = "Nombre del grupo de recursos"
   type        = string
-  default     = "RG_SEGITTUR"
+  default     = "RG_SEGITTUR_2"
 }
 
 variable "location" {
   description = "Región de Azure"
   type        = string
-  default     = "Spain Central"
+  default     = "West Europe"
 }
 
 variable "vm_name" {
