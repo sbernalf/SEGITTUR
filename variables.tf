@@ -1,7 +1,7 @@
 variable "resource_group_name" {
   description = "Nombre del grupo de recursos"
   type        = string
-  default     = "rg-bastion-jumphost-RedHat9_ENS"
+  default     = "SEGITTUR_Azure_ResourceGroup"
 }
 
 variable "location" {
