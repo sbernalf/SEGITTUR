@@ -1,7 +1,7 @@
 variable "resource_group_name" {
   description = "Nombre del grupo de recursos"
   type        = string
-  default     = "SEGITTUR_Azure_ResourceGroup"
+  default     = "RG_SEGITTUR"
 }
 
 variable "location" {
