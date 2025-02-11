@@ -110,7 +110,7 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
   settings = <<SETTINGS
     {
       "fileUris": ${jsonencode(var.script_urls)},
-      "commandToExecute": "chmod +x *.sh && ./script1.sh && ./script2.sh && ./script3.sh && ./script4.sh && ./script5.sh && ./script6.sh && ./script7.sh && ./script8.sh && ./script9.sh && ./script10.sh && ./script11.sh && ./script12.sh"
+      "commandToExecute": "chmod +x *.sh && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh && ./CCN-STIC-610A22_04-Parametros_SSH.sh && ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh && ./CCN-STIC-610A22_06-Desinstalar_usuarios_innecesarios.sh && ./CCN-STIC-610A22_07-intentos_fallidos.sh && ./CCN-STIC-610A22_09-Parametros_gnome.sh && ./CCN-STIC-610A22_10-Elementos_innecesarios.sh && ./CCN-STIC-610A22_11-Paquetes_huerfanos.sh && ./CCN-STIC-610A22_Limitacion_usb.sh"
     }
 SETTINGS
 }
