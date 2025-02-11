@@ -49,7 +49,7 @@ resource "azurerm_network_interface" "nic" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.example.id
+    subnet_id                     = azurerm_subnet.id
     private_ip_address_allocation = "Dynamic"
 
     public_ip_address {
