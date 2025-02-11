@@ -66,6 +66,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   admin_username      = var.admin_username
+  admin_password = "TSEIberia*2025"
   size                = var.vm_size
   network_interface_ids = [azurerm_network_interface.nic.id]
 
@@ -81,11 +82,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
     caching              = "ReadWrite"
     storage_account_type = "Premium_LRS"
     disk_size_gb         = 30
-  }
-
-  admin_ssh_key {
-    username   = var.admin_username
-    public_key = file(var.ssh_public_key)
   }
 
   identity {
