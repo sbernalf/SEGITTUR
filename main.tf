@@ -57,7 +57,6 @@ resource "azurerm_network_interface" "nic" {
     public_ip_address_id = azurerm_public_ip.vm_public_ip.id
   }
   }
-}
 
 # VM con Red Hat y autenticación SSH
 resource "azurerm_linux_virtual_machine" "vm" {
