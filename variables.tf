@@ -1,7 +1,7 @@
 variable "resource_group_name" {
   description = "Nombre del grupo de recursos"
   type        = string
-  default     = "rg-redhat-vm"
+  default     = "rg-bastion-jumphost-RedHat9_ENS"
 }
 
 variable "location" {
@@ -38,17 +38,14 @@ variable "script_urls" {
   description = "Lista de URLs de los scripts de configuración"
   type        = list(string)
   default     = [
-    "https://raw.githubusercontent.com/empresa/scripts/main/script1.sh",
-    "https://raw.githubusercontent.com/empresa/scripts/main/script2.sh",
-    "https://raw.githubusercontent.com/empresa/scripts/main/script3.sh",
-    "https://raw.githubusercontent.com/empresa/scripts/main/script4.sh",
-    "https://raw.githubusercontent.com/empresa/scripts/main/script5.sh",
-    "https://raw.githubusercontent.com/empresa/scripts/main/script6.sh",
-    "https://raw.githubusercontent.com/empresa/scripts/main/script7.sh",
-    "https://raw.githubusercontent.com/empresa/scripts/main/script8.sh",
-    "https://raw.githubusercontent.com/empresa/scripts/main/script9.sh",
-    "https://raw.githubusercontent.com/empresa/scripts/main/script10.sh",
-    "https://raw.githubusercontent.com/empresa/scripts/main/script11.sh",
-    "https://raw.githubusercontent.com/empresa/scripts/main/script12.sh"
+    "https://github.com/sbernalf/SEGITTUR/blob/main/CCN-STIC-610A22-Script/CCN-STIC-610A22_03-Parametros_del_kernel.sh",
+    "https://github.com/sbernalf/SEGITTUR/blob/main/CCN-STIC-610A22-Script/CCN-STIC-610A22_04-Parametros_SSH.sh",
+    "https://github.com/sbernalf/SEGITTUR/blob/main/CCN-STIC-610A22-Script/CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh",
+    "https://github.com/sbernalf/SEGITTUR/blob/main/CCN-STIC-610A22-Script/CCN-STIC-610A22_06-Desinstalar_usuarios_innecesarios.sh",
+    "https://github.com/sbernalf/SEGITTUR/blob/main/CCN-STIC-610A22-Script/CCN-STIC-610A22_07-intentos_fallidos.sh",
+    "https://github.com/sbernalf/SEGITTUR/blob/main/CCN-STIC-610A22-Script/CCN-STIC-610A22_09-Parametros_gnome.sh",
+    "https://github.com/sbernalf/SEGITTUR/blob/main/CCN-STIC-610A22-Script/CCN-STIC-610A22_10-Elementos_innecesarios.sh",
+    "https://github.com/sbernalf/SEGITTUR/blob/main/CCN-STIC-610A22-Script/CCN-STIC-610A22_11-Paquetes_huerfanos.sh",
+    "https://github.com/sbernalf/SEGITTUR/blob/main/CCN-STIC-610A22-Script/CCN-STIC-610A22_Limitacion_usb.sh",
   ]
 }
