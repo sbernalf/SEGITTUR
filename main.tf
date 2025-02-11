@@ -18,6 +18,13 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
+resource "azurerm_public_ip" "vm_public_ip" {
+  name                = "myPublicIP"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Dynamic"tu caso
+}
+
 # Red virtual
 resource "azurerm_virtual_network" "vnet" {
   name                = "vnet-standard"
@@ -41,10 +48,12 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name                          = "ipconfig1"
-    subnet_id                     = azurerm_subnet.subnet.id
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.example.id
     private_ip_address_allocation = "Dynamic"
-    #public_ip_address_id          = azurerm_public_ip.vm_public_ip.id
+
+    public_ip_address {
+      id = azurerm_public_ip.vm_public_ip.id
   }
 }
 
