@@ -52,10 +52,10 @@ resource "azurerm_network_interface" "nic" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-
-    public_ip_address {
-      id = azurerm_public_ip.vm_public_ip.id
-    }
+    
+    # Asignar la IP pública directamente a través de su ID
+    public_ip_address_id = azurerm_public_ip.vm_public_ip.id
+  }
   }
 }
 
