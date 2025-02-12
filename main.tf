@@ -38,16 +38,16 @@ resource "azurerm_subnet" "subnet" {
 
 resource "azurerm_public_ip" "example" {
   name                = "example-public-ip"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
   sku                  = "Basic"
 }
 
 resource "azurerm_bastion_host" "bastion" {
   name                = "example-bastion"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
   dns_name            = "example-bastion"
   sku                  = "Basic"
 
