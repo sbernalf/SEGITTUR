@@ -36,7 +36,7 @@ resource "azurerm_subnet" "subnet" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
-resource "azurerm_public_ip" "example" {
+resource "azurerm_public_ip" "publicip" {
   name                = "example-public-ip"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -48,14 +48,14 @@ resource "azurerm_bastion_host" "bastion" {
   name                = "example-bastion"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  dns_name            = "example-bastion"
+  dns_name            = "bastion"
   sku                  = "Basic"
 
   # Asignar IP pública
-  public_ip_address_id = azurerm_public_ip.example.id
+  public_ip_address_id = azurerm_public_ip.publicip.id
 
   # Asignar subred en una red virtual
-  subnet_id = azurerm_subnet.example.id
+  subnet_id = azurerm_subnet.subnet.id
 }
 
 # Interfaz de Red
