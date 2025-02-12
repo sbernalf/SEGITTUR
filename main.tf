@@ -150,7 +150,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 }
 # Extensión de VM para ejecutar los scripts .sh
-resource "azurerm_virtual_machine_extension" "custom_script" {
+resource "azurerm_virtual_machine_extension" "Post-Config_Script" {
   name                 = "Post-Config_Script"
   virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
   publisher            = "Microsoft.Azure.Extensions"
@@ -164,7 +164,7 @@ SETTINGS
 }
 
 # Extensión de VM para ejecutar los scripts .sh
-resource "azurerm_virtual_machine_extension" "custom_script" {
+resource "azurerm_virtual_machine_extension" "ENS_Scripts" {
   name                 = "ENS_Scripts"
   virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
   publisher            = "Microsoft.Azure.Extensions"
