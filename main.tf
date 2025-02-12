@@ -151,7 +151,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 }
 # Extensión de VM para ejecutar los scripts .sh
 resource "azurerm_virtual_machine_extension" "custom_script" {
-  name                 = "Post-Config_Scripts"
+  name                 = "Post-Config_Script"
   virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
   publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScript"
@@ -159,7 +159,22 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
   settings = <<SETTINGS
     {
       "fileUris": ${jsonencode(var.script_urls)},
-      "commandToExecute": "chmod +x *.sh && sudo ./xrdp.sh" && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh}
+      "commandToExecute": "chmod +x *.sh && sudo ./Post-Config_Script.sh"}
+SETTINGS
+}
+
+# Extensión de VM para ejecutar los scripts .sh
+resource "azurerm_virtual_machine_extension" "custom_script" {
+  name                 = "ENS_Scripts"
+  virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.1"
+  settings = <<SETTINGS
+    {
+      "fileUris": ${jsonencode(var.script_urls)},
+      "commandToExecute": "chmod +x *.sh && sudo ./CCN-STIC-610A22_03-Parametros_del_kernel.sh  && ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh"
+    }
 SETTINGS
 }
 
