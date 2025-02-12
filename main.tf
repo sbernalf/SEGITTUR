@@ -108,11 +108,10 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
   type_handler_version = "2.1"
   settings = <<SETTINGS
     {
-      #"fileUris": ${jsonencode(var.script_urls)},
-      #"commandToExecute": "chmod +x *.sh && ./xrdp.sh  && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh"
       "script": "https://stgsegittur.blob.core.windows.net/scriptsens/xrdp.sh"
     }
 SETTINGS
 }
 
-
+      # "fileUris": ${jsonencode(var.script_urls)},
+      # "commandToExecute": "chmod +x *.sh && ./xrdp.sh  && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh"
