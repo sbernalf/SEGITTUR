@@ -75,7 +75,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   source_image_reference {
     publisher = "RedHat"
     offer     = "RHEL"
-    sku       = "9.5"  # Red Hat con GUI
+    sku       = "9-lvm-gen2"  # Red Hat con GUI
     version   = "latest"
   }
 
