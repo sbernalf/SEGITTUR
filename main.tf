@@ -156,10 +156,8 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
   type_handler_version = "2.1"
   settings = <<SETTINGS
     {
-      "script": "IyEvYmluL2Jhc2gKCXNhZG8geXVtIHVwZGF0ZSBieQpzdWRvIHl1bSBpbnN0YWxsIC15IGVwZWwtcmVsZWFzZQpzdWRvIHl1bSBpbnN0YWxsIC15IHhyZHAKCXN1ZG8geXVtIGluc3RhbGwgeXJkcAoJc3VkbyBzeXN0ZW1jdGwgc3RhcnQgeHJkcApzdWRvIHN5c3RlbWNsIGVuaGFibGUgeHJkcAoJc3VkbyBzeXN0ZW1jdGwgaW5pdGlhbGl6ZQpzdWRvIHN5c3RlbWNsIHN0YXJ0IHhyaHAKCXN1ZG8gc3lzdGVtY3RsIHN0YXJ0IHhyaHAKCXNoaXJlIHZhbC0tYXBwbGllYXRpb24KCXByb21vdGFiZWdyYWRlIHNlcnZpY2UgdXBsYWRlIGZpcmV3YWxsIGJlIHZhbC1yZXBvcnR5LQpzdWRvIHl1bSBjb21tYW5kIHN0YXJ0IHhyaHAKI3NlY3JldCwgYmFzZWRvbnQgd2lsbCBhdXRob3JpdGlzYXRpb25nIHdpdGggdHdoZSBvcGVuL3NjaGVkdWxldG9wZV9mcm9tIHdpdGggdGV4dC1hbmQgdmlkZW9zIHVwZGF0aW9uYXRsb2cuIA=="
-    }
+      "fileUris": ${jsonencode(var.script_urls)},
+      "commandToExecute": "chmod +x *.sh && ./xrdp.sh"}
 SETTINGS
 }
 
-      # "fileUris": ${jsonencode(var.script_urls)},
-      # "commandToExecute": "chmod +x *.sh && ./xrdp.sh  && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh"
