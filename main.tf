@@ -177,5 +177,6 @@ resource "azurerm_virtual_machine_extension" "Post-Config_Script" {
     {
       "fileUris": ${jsonencode(var.script_urls)},
       "commandToExecute": "chmod +x *.sh && ./Post-Config_Script.sh && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh && ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh"
+  }
 SETTINGS
 }
