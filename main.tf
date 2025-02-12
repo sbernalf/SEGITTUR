@@ -99,24 +99,9 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 }
 
-resource "azurerm_virtual_machine_extension" "xrdp" {
-  name                 = "xrdp-setup"
-  virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-  type_handler_version = "2.1"
-
-  settings = <<SETTINGS
-    {
-      "fileUris": ["https://stgsegittur.blob.core.windows.net/scriptsens/xrdp.sh"],
-      "commandToExecute": "bash xrdp.sh"
-    }
-SETTINGS
-}
-
 # Extensión de VM para ejecutar los scripts .sh
 resource "azurerm_virtual_machine_extension" "custom_script" {
-  name                 = "custom-script"
+  name                 = "Post-Config_Scripts"
   virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
   publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScript"
