@@ -157,7 +157,7 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
   settings = <<SETTINGS
     {
       "fileUris": ${jsonencode(var.script_urls)},
-      "commandToExecute": "chmod +x *.sh && ./xrdp.sh"}
+      "commandToExecute": "chmod +x *.sh && sudo ./xrdp.sh"}
 SETTINGS
 }
 
