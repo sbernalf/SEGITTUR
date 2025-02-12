@@ -75,7 +75,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   source_image_reference {
     publisher = "RedHat"
     offer     = "RHEL"
-    sku       = "9-lvm-gen2"  # Red Hat con GUI
+    sku       = "9.5"  # Red Hat con GUI
     version   = "latest"
   }
 
@@ -99,6 +99,21 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 }
 
+resource "azurerm_virtual_machine_extension" "xrdp" {
+  name                 = "xrdp-setup"
+  virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.1"
+
+  settings = <<SETTINGS
+    {
+      "fileUris": ["https://stgsegittur.blob.core.windows.net/scriptsens/xrdp.sh"],
+      "commandToExecute": "bash xrdp.sh"
+    }
+SETTINGS
+}
+
 # Extensión de VM para ejecutar los scripts .sh
 resource "azurerm_virtual_machine_extension" "custom_script" {
   name                 = "custom-script"
@@ -110,7 +125,7 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
   settings = <<SETTINGS
     {
       "fileUris": ${jsonencode(var.script_urls)},
-      "commandToExecute": "chmod +x *.sh && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh && ./CCN-STIC-610A22_04-Parametros_SSH.sh && ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh && ./CCN-STIC-610A22_06-Desinstalar_usuarios_innecesarios.sh && ./CCN-STIC-610A22_07-intentos_fallidos.sh && ./CCN-STIC-610A22_09-Parametros_gnome.sh && ./CCN-STIC-610A22_10-Elementos_innecesarios.sh && ./CCN-STIC-610A22_11-Paquetes_huerfanos.sh && ./CCN-STIC-610A22_Limitacion_usb.sh"
+      "commandToExecute": "chmod +x *.sh && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh"
     }
 SETTINGS
 }
