@@ -38,7 +38,8 @@ variable "script_urls" {
   description = "Lista de URLs de los scripts de configuración"
   type        = list(string)
   default     = [
-    "https://stgsegittur.blob.core.windows.net/scriptsens/xrdp.sh",
+    "https://stgsegittur.blob.core.windows.net/scriptsens/Post-Config_Script.sh",
     "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_03-Parametros_del_kernel.sh",
+    "https://github.com/sbernalf/SEGITTUR/blob/main/CCN-STIC-610A22-Script/CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh",
   ]
 }
