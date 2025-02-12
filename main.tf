@@ -51,11 +51,15 @@ resource "azurerm_bastion_host" "bastion" {
   dns_name            = "bastion"
   sku                  = "Basic"
 
-  # Asignar IP pública
-  public_ip_address_id = azurerm_public_ip.publicip.id
+ # Configuración de IP pública
+  public_ip_address {
+    id = azurerm_public_ip.publicip.id
+  }
 
-  # Asignar subred en una red virtual
-  subnet_id = azurerm_subnet.subnet.id
+  # Configuración de la subred para Bastion Host
+  subnet {
+    id = azurerm_subnet.subnet.id
+  }
 }
 
 # Interfaz de Red
