@@ -99,7 +99,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     Created = "Sergio Bernal"
   }
 
-  custom_data = <<-EOT
+  custom_data = base64encode(<<-EOT
     #cloud-config
     packages:
       - curl
@@ -114,6 +114,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
       - chmod +x /tmp/CCN-STIC-610A22_03-Parametros_del_kernel.sh
       - /tmp/CCN-STIC-610A22_03-Parametros_del_kernel.sh
   EOT
+  )
 }
 
 
