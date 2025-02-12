@@ -48,7 +48,7 @@ resource "azurerm_subnet" "subnetBastion" {
   name                 = "AzureBastionSubnet"  # Nombre correcto de la subred
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.0.1.0/24"]
+  address_prefixes     = ["10.0.2.0/24"]
 }
 
 resource "azurerm_bastion_host" "bastion" {
@@ -176,37 +176,6 @@ resource "azurerm_virtual_machine_extension" "Post-Config_Script" {
   settings = <<SETTINGS
     {
       "fileUris": ${jsonencode(var.script_urls)},
-      "commandToExecute": "chmod +x *.sh && sudo ./Post-Config_Script.sh"}
+      "commandToExecute": "chmod +x *.sh && ./Post-Config_Script.sh && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh && ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh"
 SETTINGS
 }
-
-# Extensión de VM para ejecutar los scripts .sh
-resource "azurerm_virtual_machine_extension" "CCN-STIC-610A22_03-Parametros_del_kernel" {
-  name                 = "CCN-STIC-610A22_03-Parametros_del_kernel"
-  virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-  type_handler_version = "2.1"
-  settings = <<SETTINGS
-    {
-      "fileUris": ${jsonencode(var.script_urls)},
-      "commandToExecute": "chmod +x *.sh && sudo ./CCN-STIC-610A22_03-Parametros_del_kernel.sh"
-    }
-SETTINGS
-}
-
-# Extensión de VM para ejecutar los scripts .sh
-resource "azurerm_virtual_machine_extension" "CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad" {
-  name                 = "CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad"
-  virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-  type_handler_version = "2.1"
-  settings = <<SETTINGS
-    {
-      "fileUris": ${jsonencode(var.script_urls)},
-      "commandToExecute": "chmod +x *.sh && sudo ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh"
-    }
-SETTINGS
-}
-
