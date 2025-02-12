@@ -36,16 +36,26 @@ resource "azurerm_subnet" "subnet" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
-# Recurso Bastion
+resource "azurerm_public_ip" "example" {
+  name                = "example-public-ip"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  allocation_method   = "Static"
+  sku                  = "Basic"
+}
+
 resource "azurerm_bastion_host" "bastion" {
-  name                = "myBastionHost"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  subnet_id           = azurerm_subnet.subnet.id  # Usamos la misma subred de la VM
-  
-  public_ip_address {
-    name = "myBastionIP"
-  }
+  name                = "example-bastion"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  dns_name            = "example-bastion"
+  sku                  = "Basic"
+
+  # Asignar IP pública
+  public_ip_address_id = azurerm_public_ip.example.id
+
+  # Asignar subred en una red virtual
+  subnet_id = azurerm_subnet.example.id
 }
 
 # Interfaz de Red
