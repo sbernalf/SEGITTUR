@@ -61,6 +61,54 @@ resource "azurerm_network_interface" "nic" {
   }
   }
 
+resource "azurerm_network_security_group" "nsg" {
+  name                = "nsg-vm"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  security_rule {
+    name                       = "allow-ssh"
+    priority                   = 1000
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "allow-http"
+    priority                   = 1010
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "80"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "allow-rdp"
+    priority                   = 1020
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "3389"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+}
+
+resource "azurerm_network_interface_security_group_association" "nic_nsg" {
+  network_interface_id      = azurerm_network_interface.nic.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
+
 # VM con Red Hat y autenticación SSH
 resource "azurerm_linux_virtual_machine" "vm" {
   name                = var.vm_name
@@ -108,7 +156,7 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
   type_handler_version = "2.1"
   settings = <<SETTINGS
     {
-      "script": "https://stgsegittur.blob.core.windows.net/scriptsens/xrdp.sh"
+      "script": "IyEvYmluL2Jhc2gKCiMgSW5zdGFsYXIgWElSZAplc3VkbyB5dW0gaW5zdGFsbCAteSBhcGVsLXJlbGVhc2UKc3VkbyB5dW0gaW5zdGFsbCAteSB4cmRwCgpjcmVkZlNvY2tldCB5c3RlbSBjb250cm9sIHN0YXJ0IHhyaHAKc3VkbyBzeXN0ZW1jdGwgYXJlbXByb3ZlIHhyaHAKY29tcGxldGVzIC0tZXhwZXJpZW5jZQpzdWRvIHN5c3RlbWNsIC1lbmFibGUgeHJkcApzdWRvIHN5c3RlbWNsIHNlcnZpY2Ugc3RhcnQgeHJkcApzdWRvIHN5c3RlbWNsIHNlcnZpY2UgaW5pdGlhbGl6ZQ=="
     }
 SETTINGS
 }
