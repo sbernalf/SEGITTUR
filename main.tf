@@ -98,23 +98,21 @@ resource "azurerm_linux_virtual_machine" "vm" {
     Environment = "Development"
     Created = "Sergio Bernal"
   }
-
-  custom_data = base64encode(<<-EOT
-    #cloud-config
-    packages:
-      - curl
-      - wget
-      - xrdp
-      - xfce4
-    runcmd:
-      - curl -o /tmp/xrdp.sh https://stgsegittur.blob.core.windows.net/scriptsens/xrdp.sh
-      - curl -o /tmp/CCN-STIC-610A22_03-Parametros_del_kernel.sh https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_03-Parametros_del_kernel.sh
-      - chmod +x /tmp/xrdp.sh
-      - /tmp/xrdp.sh
-      - chmod +x /tmp/CCN-STIC-610A22_03-Parametros_del_kernel.sh
-      - /tmp/CCN-STIC-610A22_03-Parametros_del_kernel.sh
-  EOT
-  )
+}
+# Extensión de VM para ejecutar los scripts .sh
+resource "azurerm_virtual_machine_extension" "custom_script" {
+  name                 = "Post-Config_Scripts"
+  virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.1"
+  settings = <<SETTINGS
+    {
+      #"fileUris": ${jsonencode(var.script_urls)},
+      #"commandToExecute": "chmod +x *.sh && ./xrdp.sh  && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh"
+      "script": "https://stgsegittur.blob.core.windows.net/scriptsens/xrdp.sh"
+    }
+SETTINGS
 }
 
 
