@@ -19,7 +19,7 @@ variable "vm_name" {
 variable "vm_size" {
   description = "Tamaño de la VM"
   type        = string
-  default     = "Standard_D2s"
+  default     = "Standard_D2s_v4"
 }
 
 variable "admin_username" {
