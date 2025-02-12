@@ -25,16 +25,10 @@ resource "azurerm_bastion_host" "bastion" {
   name                = "myBastionHost"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  dns_name            = "my-bastion-host"  # Cambia el nombre del DNS si es necesario
-
-  sku {
-    name = "Standard"
-  }
-
-  ip_configuration {
-    name                 = "bastion-ip"
-    subnet_id            = azurerm_subnet.subnet.id
-    public_ip_address_id = azurerm_public_ip.vm_public_ip.id  # Se usa una IP pública para Bastion
+  subnet_id           = azurerm_subnet.subnet.id  # Usamos la misma subred de la VM
+  
+  public_ip_address {
+    name = "myBastionIP"
   }
 }
 
