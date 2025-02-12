@@ -132,7 +132,12 @@ resource "azurerm_linux_virtual_machine" "vm" {
     storage_account_type = "Premium_LRS"
     disk_size_gb         = 64
   }
+
+  # Habilitar autenticación de contraseña (si no usas autenticación SSH)
   disable_password_authentication = false
+
+  # Habilitar Trusted Launch
+  security_type = "TrustedLaunch"
 
   identity {
     type = "SystemAssigned"
