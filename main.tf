@@ -159,7 +159,7 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
   settings = <<SETTINGS
     {
       "fileUris": ${jsonencode(var.script_urls)},
-      "commandToExecute": "chmod +x *.sh && sudo ./xrdp.sh"}
+      "commandToExecute": "chmod +x *.sh && sudo ./xrdp.sh" && sudo ./CCN-STIC-610A22_03-Parametros_del_kernel.sh}
 SETTINGS
 }
 
