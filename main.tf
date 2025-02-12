@@ -20,13 +20,22 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
-# IP pública
-resource "azurerm_public_ip" "vm_public_ip" {
-  name                = "myPublicIP"
+# Recurso Bastion
+resource "azurerm_bastion_host" "bastion" {
+  name                = "myBastionHost"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  allocation_method   = "Static"
-  sku = "Standard"
+  dns_name            = "my-bastion-host"  # Cambia el nombre del DNS si es necesario
+
+  sku {
+    name = "Standard"
+  }
+
+  ip_configuration {
+    name                 = "bastion-ip"
+    subnet_id            = azurerm_subnet.subnet.id
+    public_ip_address_id = azurerm_public_ip.vm_public_ip.id  # Se usa una IP pública para Bastion
+  }
 }
 
 # Red Virtual
@@ -55,9 +64,6 @@ resource "azurerm_network_interface" "nic" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    
-    # Asignar la IP pública directamente a través de su ID
-    public_ip_address_id = azurerm_public_ip.vm_public_ip.id
   }
   }
 
