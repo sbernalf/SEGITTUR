@@ -96,6 +96,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   tags = {
     Environment = "Development"
+    Created = "Sergio Bernal"
   }
 }
 
