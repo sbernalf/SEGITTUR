@@ -39,13 +39,5 @@ variable "script_urls" {
   type        = list(string)
   default     = [
     "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_03-Parametros_del_kernel.sh",
-    "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_04-Parametros_SSH.sh",
-    "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh",
-    "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_06-Desinstalar_usuarios_innecesarios.sh",
-    "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_07-intentos_fallidos.sh",
-    "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_09-Parametros_gnome.sh",
-    "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_10-Elementos_innecesarios.sh",
-    "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_11-Paquetes_huerfanos.sh",
-    "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_Limitacion_usb.sh",
   ]
 }
