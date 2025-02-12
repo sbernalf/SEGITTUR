@@ -37,24 +37,31 @@ resource "azurerm_subnet" "subnet" {
 }
 
 resource "azurerm_public_ip" "publicip" {
-  name                = "example-public-ip"
+  name                = "publicip"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
   sku                  = "Basic"
 }
 
+resource "azurerm_subnet" "subnetBastion" {
+  name                 = "AzureBastionSubnet"  # Nombre correcto de la subred
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
 resource "azurerm_bastion_host" "bastion" {
-  name                = "example-bastion"
+  name                = "bastion"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   sku                  = "Basic"
 
   # IP pública asociada al Bastion Host
   ip_configuration {
-    name                 = "example-ip-config"
+    name                 = "ip-config-Bastion"
     public_ip_address_id = azurerm_public_ip.publicip.id
-    subnet_id            = azurerm_subnet.subnet.id
+    subnet_id            = azurerm_subnet.subnetBastion.id
   }
 }
 
@@ -174,8 +181,8 @@ SETTINGS
 }
 
 # Extensión de VM para ejecutar los scripts .sh
-resource "azurerm_virtual_machine_extension" "ENS_Scripts" {
-  name                 = "ENS_Scripts"
+resource "azurerm_virtual_machine_extension" "CCN-STIC-610A22_03-Parametros_del_kernel" {
+  name                 = "CCN-STIC-610A22_03-Parametros_del_kernel"
   virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
   publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScript"
@@ -183,7 +190,22 @@ resource "azurerm_virtual_machine_extension" "ENS_Scripts" {
   settings = <<SETTINGS
     {
       "fileUris": ${jsonencode(var.script_urls)},
-      "commandToExecute": "chmod +x *.sh && sudo ./CCN-STIC-610A22_03-Parametros_del_kernel.sh  && ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh"
+      "commandToExecute": "chmod +x *.sh && sudo ./CCN-STIC-610A22_03-Parametros_del_kernel.sh"
+    }
+SETTINGS
+}
+
+# Extensión de VM para ejecutar los scripts .sh
+resource "azurerm_virtual_machine_extension" "CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad" {
+  name                 = "CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad"
+  virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.1"
+  settings = <<SETTINGS
+    {
+      "fileUris": ${jsonencode(var.script_urls)},
+      "commandToExecute": "chmod +x *.sh && sudo ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh"
     }
 SETTINGS
 }
