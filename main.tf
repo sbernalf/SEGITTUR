@@ -12,6 +12,13 @@ provider "azurerm" {
   features {}
   subscription_id = "3f3e4b19-5361-4750-8e53-d52332f72899"  # Reemplaza con tu ID de suscripción
   resource_provider_registrations = "none"
+
+  # Definir tags globales para todos los recursos
+  default_tags = {
+    environment = "dev"
+    project     = "PIA"
+    owner       = "Sergio Bernal"
+  }
 }
 
 # Grupo de recursos
@@ -96,7 +103,7 @@ resource "azurerm_network_security_group" "nsg" {
   }
 
   security_rule {
-    name                       = "allow-ssh"
+    name                       = "allow-ssh_modified"
     priority                   = 1000
     direction                  = "Inbound"
     access                     = "Allow"
@@ -171,11 +178,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   boot_diagnostics {
     storage_account_uri = null
-  }
-
-  tags = {
-    Environment = "Development"
-    Created = "Sergio Bernal"
   }
 }
 
