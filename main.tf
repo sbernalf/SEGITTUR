@@ -166,6 +166,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     Created = "Sergio Bernal"
   }
 }
+
 # Extensión de VM para ejecutar los scripts .sh
 resource "azurerm_virtual_machine_extension" "Post-Config_Script" {
   name                 = "Post-Config_Script"
