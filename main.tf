@@ -29,7 +29,7 @@ resource "azurerm_resource_group" "rg" {
 
 # Red Virtual
 resource "azurerm_virtual_network" "vnet" {
-  name                = "vnet-standard"
+  name                = "VirtualNetwork"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   address_space       = ["10.0.0.0/16"]
@@ -37,7 +37,7 @@ resource "azurerm_virtual_network" "vnet" {
 
 # Subred
 resource "azurerm_subnet" "subnet" {
-  name                 = "subnet-vm"
+  name                 = "VMSubnet"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.1.0/24"]
@@ -51,7 +51,7 @@ resource "azurerm_subnet" "subnetBastion" {
 }
 
 resource "azurerm_public_ip" "publicip" {
-  name                = "publicip"
+  name                = "Bastion-PublicIP"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
@@ -59,7 +59,7 @@ resource "azurerm_public_ip" "publicip" {
 }
 
 resource "azurerm_bastion_host" "bastion" {
-  name                = "bastion"
+  name                = "Bastion"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   sku                  = "Standard"
@@ -104,7 +104,7 @@ resource "azurerm_network_security_group" "nsg" {
 
   security_rule {
     name                       = "allow-ssh_modified"
-    priority                   = 1000
+    priority                   = 1030
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
