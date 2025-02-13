@@ -43,6 +43,28 @@ resource "azurerm_subnet" "subnetBastion" {
   address_prefixes     = ["10.0.2.0/24"]
 }
 
+resource "azurerm_public_ip" "publicip" {
+  name                = "publicip"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Static"
+  sku                  = "Standard"
+}
+
+resource "azurerm_bastion_host" "bastion" {
+  name                = "bastion"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                  = "Standard"
+
+  # IP pública asociada al Bastion Host
+  ip_configuration {
+    name                 = "ip-config-Bastion"
+    public_ip_address_id = azurerm_public_ip.publicip.id
+    subnet_id            = azurerm_subnet.subnetBastion.id
+  }
+}
+
 # Interfaz de Red
 resource "azurerm_network_interface" "nic" {
   name                = "nic-vm"
