@@ -51,6 +51,20 @@ resource "azurerm_subnet" "subnetBastion" {
   address_prefixes     = ["10.0.2.0/24"]
 }
 
+resource "azurerm_bastion_host" "bastion" {
+  name                = "bastion"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                  = "Standard"
+
+  # IP pública asociada al Bastion Host
+  ip_configuration {
+    name                 = "ip-config-Bastion"
+    public_ip_address_id = azurerm_public_ip.publicip.id
+    subnet_id            = azurerm_subnet.subnetBastion.id
+  }
+}
+
 # Interfaz de Red
 resource "azurerm_network_interface" "nic" {
   name                = "nic-vm"
@@ -162,7 +176,7 @@ resource "azurerm_virtual_machine_extension" "Post-Config_Script" {
   settings = <<SETTINGS
     {
       "fileUris": ${jsonencode(var.script_urls)},
-      "commandToExecute": "chmod +x *.sh && ./Post-Config_Script.sh && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh && ./CCN-STIC-610A22_04-Parametros_SSH.sh && ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh && ./CCN-STIC-610A22_06-Desinstalar_usuarios_innecesarios.sh && ./CCN-STIC-610A22_07-intentos_fallidos.sh && ./CCN-STIC-610A22_08-Limites_permisos_y_cad_contraseñas.sh && ./CCN-STIC-610A22_09-Parametros_gnome.sh && ./CCN-STIC-610A22_10-Elementos_innecesarios.sh && ./CCN-STIC-610A22_11-Paquetes_huerfanos.sh && ./CCN-STIC-610A22_Limitacion_usb.sh && ./Restart.sh"
+      "commandToExecute": "chmod +x *.sh && ./Post-Config_Script.sh && ./Restart.sh"
   }
 SETTINGS
 }
