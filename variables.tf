@@ -51,6 +51,6 @@ variable "script_urls" {
     "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_10-Elementos_innecesarios.sh",
     "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_11-Paquetes_huerfanos.sh",
     "https://stgsegittur.blob.core.windows.net/scriptsens/CCN-STIC-610A22_Limitacion_usb.sh",
-    "https://stgsegittur.blob.core.windows.net/scriptsens/Restart.sh",
+    "https://stgsegittur.blob.core.windows.net/scriptsens/Restart.sh"
   ]
 }
