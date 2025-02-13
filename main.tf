@@ -151,7 +151,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   admin_username      = var.admin_username
-  admin_password = "TSEIberia*2025"
+  admin_password = "2025*TSEIberia*2025"
   size                = var.vm_size
   network_interface_ids = [azurerm_network_interface.nic.id]
 
@@ -191,7 +191,7 @@ resource "azurerm_virtual_machine_extension" "Post-Config_Script" {
   settings = <<SETTINGS
     {
       "fileUris": ${jsonencode(var.script_urls)},
-      "commandToExecute": "chmod +x *.sh && ./Post-Config_Script.sh && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh && ./CCN-STIC-610A22_04-Parametros_SSH.sh && ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh && ./CCN-STIC-610A22_07-intentos_fallidos.sh && ./CCN-STIC-610A22_08-Limites_permisos_y_cad_contraseñas.sh && ./CCN-STIC-610A22_09-Parametros_gnome.sh && ./CCN-STIC-610A22_10-Elementos_innecesarios.sh && ./CCN-STIC-610A22_11-Paquetes_huerfanos.sh && ./CCN-STIC-610A22_Limitacion_usb.sh && ./Restart.sh"
+      "commandToExecute": "chmod +x *.sh && ./Post-Config_Script.sh && ./CCN-STIC-610A22_02-Usuarios_root_y_sin_contraseña.sh && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh && ./CCN-STIC-610A22_04-Parametros_SSH.sh && ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh && ./CCN-STIC-610A22_07-intentos_fallidos.sh && ./CCN-STIC-610A22_08-Limites_permisos_y_cad_contraseñas.sh && ./CCN-STIC-610A22_10-Elementos_innecesarios.sh && ./CCN-STIC-610A22_11-Paquetes_huerfanos.sh && ./CCN-STIC-610A22_Limitacion_usb.sh && ./Restart.sh"
   }
 SETTINGS
 }
