@@ -12,19 +12,19 @@ provider "azurerm" {
   features {}
   subscription_id = "3f3e4b19-5361-4750-8e53-d52332f72899"  # Reemplaza con tu ID de suscripción
   resource_provider_registrations = "none"
-
-  # Definir tags globales para todos los recursos
-  default_tags = {
-    environment = "dev"
-    project     = "PIA"
-    owner       = "Sergio Bernal"
-  }
 }
 
 # Grupo de recursos
 resource "azurerm_resource_group" "rg" {
   name     = var.resource_group_name
   location = var.location
+
+  # Definir tags globales para todos los recursos
+  tags = {
+    environment = "dev"
+    project     = "PIA"
+    owner       = "Sergio Bernal"
+  }
 }
 
 # Red Virtual
