@@ -123,18 +123,18 @@ resource "azurerm_linux_virtual_machine" "vm" {
   size                = var.vm_size
   network_interface_ids = [azurerm_network_interface.nic.id]
 
-   storage_os_disk {
-    name              = "myosdisk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed           = true
+ # Imagen Red Hat con GUI
+  source_image_reference {
+    publisher = "RedHat"
+    offer     = "RHEL"
+    sku       = "9-lvm-gen2"  # Red Hat con GUI
+    version   = "latest"
   }
 
-  storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "20.04-LTS"
-    version   = "latest"
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+    disk_size_gb         = 64
   }
 
   # Habilitar autenticación de contraseña (si no usas autenticación SSH)
