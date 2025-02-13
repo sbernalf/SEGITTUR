@@ -51,19 +51,6 @@ resource "azurerm_subnet" "subnetBastion" {
   address_prefixes     = ["10.0.2.0/24"]
 }
 
-resource "azurerm_bastion_host" "bastion" {
-  name                = "bastion"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  sku                  = "Standard"
-
-  # IP pública asociada al Bastion Host
-  ip_configuration {
-    name                 = "ip-config-Bastion"
-    public_ip_address_id = azurerm_public_ip.publicip.id
-    subnet_id            = azurerm_subnet.subnetBastion.id
-  }
-}
 
 # Interfaz de Red
 resource "azurerm_network_interface" "nic" {
@@ -136,18 +123,18 @@ resource "azurerm_linux_virtual_machine" "vm" {
   size                = var.vm_size
   network_interface_ids = [azurerm_network_interface.nic.id]
 
-  # Imagen Red Hat con GUI
-  source_image_reference {
-    publisher = "RedHat"
-    offer     = "RHEL"
-    sku       = "9-lvm-gen2"  # Red Hat con GUI
-    version   = "latest"
+   storage_os_disk {
+    name              = "myosdisk"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed           = true
   }
 
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Premium_LRS"
-    disk_size_gb         = 64
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "20.04-LTS"
+    version   = "latest"
   }
 
   # Habilitar autenticación de contraseña (si no usas autenticación SSH)
