@@ -1,19 +1,19 @@
 variable "resource_group_name" {
   description = "Nombre del grupo de recursos"
   type        = string
-  default     = "RG_SEGITTUR_2"
+  default     = "RG_SEGITTUR_SpainCentral"
 }
 
 variable "location" {
   description = "Región de Azure"
   type        = string
-  default     = "West Europe"
+  default     = "Spain Central"
 }
 
 variable "vm_name" {
   description = "Nombre de la máquina virtual"
   type        = string
-  default     = "redhat-jumphost"
+  default     = "JumpHost-RH9-ENS"
 }
 
 variable "vm_size" {
