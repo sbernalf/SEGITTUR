@@ -16,7 +16,7 @@ provider "azurerm" {
 
 # Grupo de recursos
 resource "azurerm_resource_group" "rg" {
-  name     = rg_SEGITTUR_2
+  name     = "rg_SEGITTUR_2"
   location = var.location
 
   # Definir tags globales para todos los recursos
