@@ -191,7 +191,7 @@ resource "azurerm_virtual_machine_extension" "Post-Config_Script" {
   settings = <<SETTINGS
     {
       "fileUris": ${jsonencode(var.script_urls)},
-      "commandToExecute": "chmod +x *.sh && ./Post-Config_Script.sh && ./CCN-STIC-610A22_02-Usuarios_root_y_sin_contraseña.sh && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh && ./CCN-STIC-610A22_04-Parametros_SSH.sh && ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh && ./CCN-STIC-610A22_06-Desinstalar_usuarios_innecesarios.sh && ./CCN-STIC-610A22_07-intentos_fallidos.sh && ./CCN-STIC-610A22_10-Elementos_innecesarios.sh && ./CCN-STIC-610A22_11-Paquetes_huerfanos.sh && ./CCN-STIC-610A22_Limitacion_usb.sh && ./Restart.sh"
+      "commandToExecute": "chmod +x *.sh && ./Post-Config_Script.sh && ./CCN-STIC-610A22_03-Parametros_del_kernel.sh && ./CCN-STIC-610A22_04-Parametros_SSH.sh && ./CCN-STIC-610A22_05-Manipulacion_de_registros_de_actividad.sh && ./CCN-STIC-610A22_06-Desinstalar_usuarios_innecesarios.sh && ./CCN-STIC-610A22_07-intentos_fallidos.sh && ./CCN-STIC-610A22_10-Elementos_innecesarios.sh && ./CCN-STIC-610A22_11-Paquetes_huerfanos.sh && ./CCN-STIC-610A22_Limitacion_usb.sh && ./Restart.sh"
   }
 SETTINGS
 }
